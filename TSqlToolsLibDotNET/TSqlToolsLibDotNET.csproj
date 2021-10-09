@@ -51,7 +51,9 @@
   <ItemGroup>
     <Compile Include="CaseChangingCharStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TSqlCommentsFromDescriptionListener.cs" />
     <Compile Include="TSqlDescriptionFromCommentsListener.cs" />
+    <Compile Include="TSqlExtractDescriptionListener.cs" />
     <Compile Include="TSqlLexer.cs" />
     <Compile Include="TSqlParser.cs" />
     <Compile Include="TSqlParserBaseListener.cs" />

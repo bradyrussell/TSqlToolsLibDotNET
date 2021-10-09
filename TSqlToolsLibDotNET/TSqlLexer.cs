@@ -19,6 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
+
 using System;
 using System.IO;
 using System.Text;
@@ -9734,7 +9735,7 @@ public partial class TSqlLexer : Lexer {
 		'\x13A2', '\x2846', '\x284F', '\x2851', '\x285F', '\x2868', '\x2872', 
 		'\x2874', '\x287C', '\x287E', '\x2884', '\x2888', '\x288C', '\x288E', 
 		'\x2892', '\x2898', '\x289A', '\x28A4', '\x28AB', '\x28AF', '\x28B4', 
-		'\x2907', '\x290D', '\x2912', '\x291A', '\x291C', '\x4', '\b', '\x2', 
+		'\x2907', '\x290D', '\x2912', '\x291A', '\x291C', '\x4', '\x2', '\x4', 
 		'\x2', '\x2', '\x3', '\x2',
 	};
 
