@@ -12,7 +12,6 @@ namespace TSqlToolsLib
         private static string descriptionCommentEndSymbol = "$";
 
         private CommonTokenStream tokens;
-        private TokenStreamRewriter rewriter;
         private List<string> columnDescriptions = new List<string>();
 
         private string currentTable = null;
@@ -21,7 +20,6 @@ namespace TSqlToolsLib
         public TSqlDescriptionFromCommentsListener(CommonTokenStream tokens)
         {
             this.tokens = tokens;
-            this.rewriter = new TokenStreamRewriter(tokens);
         }
 
         public override void EnterCreate_table(TSqlParser.Create_tableContext ctx)
@@ -51,7 +49,7 @@ namespace TSqlToolsLib
 
         public override void EnterColumn_definition(TSqlParser.Column_definitionContext ctx)
         {
-            string columnName = ctx.id_()[0].GetText().Replace("[", "").Replace("]", "");
+            string columnName = RemoveBrackets(ctx.id_()[0].GetText());
             Debug.WriteLine(columnName);
 
             int offset = 0;
@@ -60,13 +58,13 @@ namespace TSqlToolsLib
                 offset = 1;
             }
 
-            IList<IToken> comments = tokens.GetHiddenTokensToRight(ctx.Stop.TokenIndex + offset);
+            IList<IToken> comments = tokens.GetHiddenTokensToRight(ctx.Stop.TokenIndex + offset, 1);
 
             if (comments == null) return;
 
             if (comments.Count > 1)
             {
-                throw new Exception("Multiple comments not allowed. Line: " + comments[0].Line);
+                return;
             }
 
             if (comments.Count == 1)

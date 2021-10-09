@@ -17,7 +17,7 @@ namespace TSqlToolsLib
             var listener = new TSqlDescriptionFromCommentsListener(tokens);
             ParseTreeWalker.Default.Walk(listener, parser.tsql_file());
             var x = listener.GetColumnDescriptions().ToArray();
-            return string.Join("\n", x);
+            return string.Join("\r\n", x);
         }
 
         public static string GenerateCommentsFromDescriptions(string input)
@@ -27,7 +27,9 @@ namespace TSqlToolsLib
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             TSqlParser parser = new TSqlParser(tokens);
             parser.BuildParseTree = true;
+
             var generator = new TSqlCommentsFromDescriptionListener(tokens, ExtractDescriptions(input));
+            ParseTreeWalker.Default.Walk(generator, parser.tsql_file());
             return generator.getResultTSql();
         }
 

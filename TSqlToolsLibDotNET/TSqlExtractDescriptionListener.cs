@@ -33,46 +33,41 @@ namespace TSqlToolsLib
 
         private void saveDescription()
         {
-            descriptions[string.Join(".", currentSchema, currentTable, currentColumn)] = currentDescription;
+            descriptions.Add(string.Join(".", currentSchema, currentTable, currentColumn), currentDescription);
             resetCurrentValues();
         }
 
         override public void EnterExecute_statement(TSqlParser.Execute_statementContext ctx)
         {
+            var y = ctx.execute_body().execute_statement_arg().execute_statement_arg_named();
             foreach (TSqlParser.Execute_statement_arg_namedContext s in ctx.execute_body().execute_statement_arg().execute_statement_arg_named())
             {
                 string value = readTSqlNstring(s.execute_parameter().GetText());
-                switch (s.LOCAL_ID().GetText())
+                var id = s.LOCAL_ID().GetText();
+
+                if (id == "@name")
                 {
-                    case "@name":
-                        {
-                            if (!value.Equals("MS_Description"))
-                            {
-                                resetCurrentValues();
-                                return;
-                            }
-                            break;
-                        }
-                    case "@value":
-                        {
-                            currentDescription = value;
-                            break;
-                        }
-                    case "@level0name":
-                        {
-                            currentSchema = value;
-                            break;
-                        }
-                    case "@level1name":
-                        {
-                            currentTable = value;
-                            break;
-                        }
-                    case "@level2name":
-                        {
-                            currentColumn = value;
-                            break;
-                        }
+                    if (value != "MS_Description")
+                    {
+                        resetCurrentValues();
+                        return;
+                    }
+                }
+                else if (id == "@value")
+                {
+                    currentDescription = value;
+                }
+                else if (id == "@level0name")
+                {
+                    currentSchema = value;
+                }
+                else if (id == "@level1name")
+                {
+                    currentTable = value;
+                }
+                else if (id == "@level2name")
+                {
+                    currentColumn = value;
                 }
             }
             saveDescription();
@@ -80,7 +75,7 @@ namespace TSqlToolsLib
 
         public string readTSqlNstring(string nstring)
         {
-            return nstring.StartsWith("N'") ? nstring.Substring(2, nstring.Length - 1).Replace("''", "'") : nstring;
+            return nstring.StartsWith("N'") ? nstring.Substring(2, nstring.Length - 3).Replace("''", "'") : nstring;
         }
 
         public Dictionary<string, string> getDescriptions()
