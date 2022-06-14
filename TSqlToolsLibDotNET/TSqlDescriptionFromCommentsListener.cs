@@ -42,15 +42,15 @@ namespace TSqlToolsLib
             {
                 currentTable = null;
             }
-            Debug.WriteLine("Current Schema: "+ currentSchema);
-            Debug.WriteLine("Current Table: "+ currentTable);
+            //Debug.WriteLine("Current Schema: "+ currentSchema);
+            //Debug.WriteLine("Current Table: "+ currentTable);
         }
 
 
         public override void EnterColumn_definition(TSqlParser.Column_definitionContext ctx)
         {
             string columnName = RemoveBrackets(ctx.id_()[0].GetText());
-            Debug.WriteLine(columnName);
+            //Debug.WriteLine(columnName);
 
             int offset = 0;
             if (tokens.Get(ctx.Stop.TokenIndex + 1).Type == TSqlParser.COMMA)
@@ -70,11 +70,11 @@ namespace TSqlToolsLib
             if (comments.Count == 1)
             {
                 string commentText = comments[0].Text;
-                Debug.WriteLine("Found comment: "+ commentText);
+                //Debug.WriteLine("Found comment: "+ commentText);
 
                 if (commentText.Contains(descriptionCommentBeginSymbol))
                 {
-                    Debug.WriteLine("Comment contains description!");
+                    //Debug.WriteLine("Comment contains description!");
                     int index = commentText.IndexOf(descriptionCommentBeginSymbol);
                     string descriptionFromComment = commentText.Substring(index + descriptionCommentBeginSymbol.Length);
                     if (descriptionFromComment.Contains(descriptionCommentEndSymbol))
@@ -82,13 +82,13 @@ namespace TSqlToolsLib
                         int index2 = descriptionFromComment.IndexOf(descriptionCommentEndSymbol);
                         descriptionFromComment = descriptionFromComment.Substring(0, index2);
                     }
-                    Debug.WriteLine("Description for column " + columnName + ": " + descriptionFromComment);
+                    //Debug.WriteLine("Description for column " + columnName + ": " + descriptionFromComment);
 
                     columnDescriptions.Add(MakeDescription(currentSchema, currentTable, columnName, descriptionFromComment.Replace("'", "''")));
                 }
                 else
                 {
-                    Debug.WriteLine("Comment is regular comment!");
+                    //Debug.WriteLine("Comment is regular comment!");
                 }
             }
         }

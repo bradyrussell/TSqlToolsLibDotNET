@@ -33,7 +33,7 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 /// which can be extended to create a listener which only needs to handle a subset
 /// of the available methods.
 /// </summary>
-[System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.9.2")]
+//[System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.9.2")]
 [System.Diagnostics.DebuggerNonUserCode]
 [System.CLSCompliant(false)]
 public partial class TSqlParserBaseListener : ITSqlParserListener {
