@@ -28,7 +28,7 @@ using IToken = Antlr4.Runtime.IToken;
 /// This interface defines a complete listener for a parse tree produced by
 /// <see cref="TSqlParser"/>.
 /// </summary>
-[System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.9.2")]
+//[System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.9.2")]
 [System.CLSCompliant(false)]
 public interface ITSqlParserListener : IParseTreeListener {
 	/// <summary>
